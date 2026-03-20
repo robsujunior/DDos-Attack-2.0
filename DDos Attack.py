@@ -37,28 +37,32 @@ time.sleep(3)
 
 
 def testar_conexao_tcp(host, porta, timeout=5):
-    while True:
-        try:
-            # Cria o socket TCP
-            sock = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
-            sock.settimeout(timeout)
+        
+    try:
+        # Cria o socket TCP
+        sock = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
+        sock.settimeout(timeout)
 
-            # Tenta conectar
-            resultado = sock.connect_ex((host, porta))
+       # 2. Estabelece a Conexão (Handshake)
+        sock.connect((host, porta))
+  
 
-            if resultado == 0:
-                print(f"[OK] Conexão bem-sucedida em {host}:{porta}")
-                return True
-            else:
-                print(f"[ERRO] Não foi possível conectar em {host}:{porta}")
-                return False
+        # 3. Envia um pacote de dados (Payload)
+        # Se for porta 80, enviamos um cabeçalho HTTP básico
+        payload = "GET / HTTP/1.1\r\nHost: localhost\r\n\r\n"
+        while True:
+            sock.sendall(payload.encode())
+            resposta = sock.recv(1024)
+            if resposta:
+                print(f"[Resposta recebida ({len(resposta)} bytes)")
 
-        except Exception as e:
-            print(f"[EXCEÇÃO] Erro ao conectar: {e}")
-            return False
+          
+    except Exception as e:
+        print(f"[EXCEÇÃO] Erro ao conectar: {e}")
+        return False
 
-        finally:
-            sock.close()
+    finally:
+        sock.close()
 
 
 threads = []
