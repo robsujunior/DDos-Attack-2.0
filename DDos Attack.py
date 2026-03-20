@@ -37,33 +37,34 @@ time.sleep(3)
 
 
 def testar_conexao_tcp(host, porta, timeout=5):
-    try:
-        # Cria o socket TCP
-        sock = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
-        sock.settimeout(timeout)
+    while True:
+        try:
+            # Cria o socket TCP
+            sock = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
+            sock.settimeout(timeout)
 
-        # Tenta conectar
-        resultado = sock.connect_ex((host, porta))
+            # Tenta conectar
+            resultado = sock.connect_ex((host, porta))
 
-        if resultado == 0:
-            print(f"[OK] Conexão bem-sucedida em {host}:{porta}")
-            return True
-        else:
-            print(f"[ERRO] Não foi possível conectar em {host}:{porta}")
+            if resultado == 0:
+                print(f"[OK] Conexão bem-sucedida em {host}:{porta}")
+                return True
+            else:
+                print(f"[ERRO] Não foi possível conectar em {host}:{porta}")
+                return False
+
+        except Exception as e:
+            print(f"[EXCEÇÃO] Erro ao conectar: {e}")
             return False
 
-    except Exception as e:
-        print(f"[EXCEÇÃO] Erro ao conectar: {e}")
-        return False
-
-    finally:
-        sock.close()
+        finally:
+            sock.close()
 
 
 threads = []
 
 # Criando várias threads
-while True:
+for i in range(10):  # Exemplo: criando 100 threads
     th = threading.Thread(target=testar_conexao_tcp, args=(ip, 443)) # Exemplo: testando porta 443
     t = threading.Thread(target=testar_conexao_tcp, args=(ip, 80))  # Exemplo: testando porta 80
     threads.append(t)
