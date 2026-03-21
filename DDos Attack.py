@@ -13,7 +13,7 @@ subprocess.run(["figlet", "DDOS ATTACK"])
 print()
 print("Author   : Robson Junior")
 print("Github   : github.com/robsujunior")
-print("Note: Ferramenta para fins educacionais!")
+print("Nota: Ferramenta para fins educacionais!")
 print()
 
 ip = input("IP Target : ")
