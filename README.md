@@ -38,14 +38,14 @@ Para executar este projeto, você precisará de:
 
 ## 🚀 Como executar
 
-### 1. Clone o repositório
+### 1. Clone o repositório e navegue até a pasta
 
 ```bash
 git clone https://github.com/robsujunior/DDos-Attack-2.0.git
 cd DDos-Attack-2.0
 ```
 
-### 2. Dar permissão de execução 
+### 2. Dê permissão de execução 
 
 ```bash
 chmod +x DDos Attack.py
