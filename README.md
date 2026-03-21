@@ -19,11 +19,20 @@ Este projeto tem como objetivo demonstrar o funcionamento de um ataque DDos (Dos
 
 O código realiza:
 
-1. Criação de múltiplas threads  
-2. Estabelecimento de conexões TCP com um host  
-3. Envio de requisições HTTP simples  
-4. Recebimento (ou não) de respostas do servidor  
-5. Monitoramento básico via saída no terminal  
+- Criação de múltiplas threads  
+- Estabelecimento de conexões TCP com um host  
+- Envio de requisições HTTP simples  
+- Recebimento (ou não) de respostas do servidor  
+- Monitoramento básico via saída no terminal  
+
+---
+
+## 📋 Requisitos
+
+Para executar este projeto, você precisará de:
+
+- Python3
+- Sistema operacional baseado em Linux (Ubuntu, Debian, etc.) ou macOS
 
 ---
 
@@ -35,7 +44,14 @@ O código realiza:
 git clone https://github.com/robsujunior/DDos-Attack-2.0.git
 cd DDos-Attack-2.0
 ```
+
+### 2. Dar permissão de execução 
+
+```bash
+chmod +x DDos Attack.py
+```
+
 ### 2. Execute o script
 ```bash
-python nome_do_arquivo.py
+python DDos Attack.py
 ```
