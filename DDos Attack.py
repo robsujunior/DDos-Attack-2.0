@@ -36,12 +36,7 @@ print("ATAQUE DDOS INICIADO(educacional)")
 time.sleep(3)
 
 
-import socket
-import threading
-import random
-
 # Configurações
-ip = "portal-do-estudante.vercel.app"
 tentativas_por_thread = 1000 # Evita loop infinito travando o PC
 
 def estresse_maximo(host, porta):
