@@ -1,6 +1,6 @@
-# 📌 Teste de Conexões TCP e Carga Controlada
+# 📌 Ataque DDos
 
-Este projeto tem como objetivo demonstrar o funcionamento de conexões TCP e simular cenários de múltiplas requisições simultâneas para análise de comportamento de servidores em ambiente controlado.
+Este projeto tem como objetivo demonstrar o funcionamento de um ataque DDos (Dos, caso seja executado em apenas uma máquina).
 
 ---
 
