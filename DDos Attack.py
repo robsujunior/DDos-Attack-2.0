@@ -46,13 +46,15 @@ def estresse_maximo(host, porta):
     for _ in range(tentativas_por_thread):
         try:
             # Criar o socket com timeout baixíssimo para não desperdiçar tempo
-            sock = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
+            sock = socket.socket(socket.AF_INET, socket.SOCK_STREAM) # TCP
             sock.settimeout(0.5) 
-            
+
+            print(f"[INFO] Conectando em {host}:{porta}")
             sock.connect((host, porta))
             
             # Enviar o payload repetidamente na mesma conexão (Pipeline)
             for _ in range(10): 
+                print(f"[ENVIO] {host}:{porta} -> {payload.strip()}")
                 sock.sendall(payload)
                 
             # NOTA: Não usamos sock.recv() para não bloquear a thread
