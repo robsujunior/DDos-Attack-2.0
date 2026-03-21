@@ -53,5 +53,5 @@ chmod +x DDos Attack.py
 
 ### 2. Execute o script
 ```bash
-python DDos Attack.py
+python3 DDos Attack.py
 ```
